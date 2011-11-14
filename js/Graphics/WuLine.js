@@ -10,10 +10,17 @@ var WuLine = Line.extend({
 			y: y1
 		});
 
+<<<<<<< HEAD
 		var dx = x2 - x1;
 		var dy = y2 - y1;
 		
 		if(Math.abs(dy) < Math.abs(dx)) {
+=======
+		var dx = Math.abs(x2 - x1);
+		var dy = Math.abs(y2 - y1);
+		
+		if(dy < dx) {
+>>>>>>> f159a9611447475a107e466186cb154473c3bc48
 			if(x2 < x1) {
 				x2 += x1; x1 = x2 - x1; x2 -= x1;
 				y2 += y1; y1 = y2 - y1; y2 -= y1;

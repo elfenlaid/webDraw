@@ -11,6 +11,7 @@ Math.fpart = function(x) {
 	if(Math.abs(a) < Math.EPSILON) return 0;
 	if(1 - Math.abs(a) < Math.EPSILON) return 1;
 	return a;
+<<<<<<< HEAD
 }
 
 Math.rfpart = function(x) {
@@ -20,3 +21,6 @@ Math.rfpart = function(x) {
 Math.sqr = function(x) {
 	return Math.pow(x, 2);
 }
+=======
+}
+>>>>>>> f159a9611447475a107e466186cb154473c3bc48

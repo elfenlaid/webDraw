@@ -8,6 +8,7 @@ var Context = function(canvasContext, width, height){
 	this.drawPixel = function(x, y, color){
 		if(x >= 0 && x < this.width && y >= 0 && y < this.height)
 		{
+<<<<<<< HEAD
 			//1-фон, 2-слой. Х=х2 а2 + х1 (1-а2)
 			index = (x + y * this.imageData.width) * 4;
 			var alpha = color.a / 0xFF;
@@ -28,6 +29,13 @@ var Context = function(canvasContext, width, height){
 	    		b: this.imageData.data[index + 2],
 	    		a: this.imageData.data[index + 3]
 	    	};
+=======
+			index = (x + y * this.imageData.width) * 4;
+	    	this.imageData.data[index + 0] = color.r;
+	    	this.imageData.data[index + 1] = color.g;
+	    	this.imageData.data[index + 2] = color.b;
+	    	this.imageData.data[index + 3] = color.a;
+>>>>>>> f159a9611447475a107e466186cb154473c3bc48
 	    }
 	}
 
@@ -44,6 +52,7 @@ var Context = function(canvasContext, width, height){
 	}
 
 	this.clear = function(){
+<<<<<<< HEAD
 		for(var x = 0; x < this.width; x++){
 			for(var y = 0; y < this.height; y++){
 				index = (x + y * this.imageData.width) * 4;
@@ -56,6 +65,15 @@ var Context = function(canvasContext, width, height){
 	}
 
 
+=======
+		for(var i = 0; i < this.width; i++){
+			for(var j = 0; j < this.height; j++){
+				this.drawPixel(i, j, this._white);
+			}
+		}
+	}
+
+>>>>>>> f159a9611447475a107e466186cb154473c3bc48
 	this.setSize = function(width, height){
 		this.width = width;
 		this.height = height;

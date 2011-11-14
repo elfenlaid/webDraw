@@ -42,3 +42,10 @@ canvas.redraw();
 //canvas.draw(ellipse);
 //canvas.draw(circle);
 
+<<<<<<< HEAD
+=======
+canvas.draw(line);
+canvas.draw(line2);
+canvas.draw(line3);
+
+>>>>>>> f159a9611447475a107e466186cb154473c3bc48
