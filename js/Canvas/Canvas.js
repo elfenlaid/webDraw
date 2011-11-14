@@ -11,15 +11,10 @@ var Canvas = Backbone.View.extend({
 
 		this.ctx = this.el[0].getContext('2d');
 		this.context = new Context(this.ctx, this.width, this.height);
-<<<<<<< HEAD
-=======
-		
->>>>>>> f159a9611447475a107e466186cb154473c3bc48
 		this.pixelSize = this.model.get('pixelSize');
 		this._setCanvasSize();
 		_.bindAll(this, 'changePixelSize');
 		this.model.bind('change:pixelSize', this.changePixelSize);
-<<<<<<< HEAD
 		this.clear();
 		this.grid();
 	},
@@ -31,24 +26,17 @@ var Canvas = Backbone.View.extend({
 	            this.context.drawPixel(j, i, {r: 0, g: 0, b: 0, a: 140});
 	        }
 	    }
-=======
->>>>>>> f159a9611447475a107e466186cb154473c3bc48
 	},
 	
 	click: function(e) {
 		var x = Math.floor(e.offsetX / this.pixelSize);
 		var y = Math.floor(e.offsetY / this.pixelSize);
-<<<<<<< HEAD
 		var point = new Point({x: x, y: y});
 		//this.drawPoint(point, $.Color('black'));
 		//this.context.flush();
 		
 		drawVector[drawVector.length] = point;
 		if (drawState) eval(drawState + '();');
-=======
-		this.drawPoint(new Point({x: x, y: y}), 'black');
-		this.context.flush();
->>>>>>> f159a9611447475a107e466186cb154473c3bc48
 	},
 
 	_setCanvasSize: function() {
@@ -77,10 +65,7 @@ var Canvas = Backbone.View.extend({
 	},
 	
 	draw: function(figure){
-<<<<<<< HEAD
 	    //this.context.clear();
-=======
->>>>>>> f159a9611447475a107e466186cb154473c3bc48
 		if(_.isFunction(figure.render)){
 			figure.canvas = this;
 			figure.render();
@@ -95,7 +80,6 @@ var Canvas = Backbone.View.extend({
 		for(var i = 0; i < this._figures.length; i++){
 			this._figures[i].render();
 		}
-<<<<<<< HEAD
 		this.grid();
 		this.context.flush();
 	},
@@ -109,16 +93,6 @@ var Canvas = Backbone.View.extend({
         this.clear();
 	},
 	
-=======
-		this.context.flush();
-	},
-	
-	clear: function() {
-		//this.ctx.clearRect(0, 0, this.el.width(), this.el.height());
-		this.context.clear();
-	},
-	
->>>>>>> f159a9611447475a107e466186cb154473c3bc48
 	changePixelSize: function(e) {
 		this.pixelSize = this.model.get('pixelSize');
 		this._setCanvasSize();
