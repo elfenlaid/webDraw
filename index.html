@@ -1,23 +1,104 @@
 <html>
 	<head>
-		<style>
-			canvas
-			{
-				border-color: red;
-				border-style: solid;
-				border-width: 1px;
-			}
-		</style>
-
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
+		<link rel="stylesheet" type="text/css" href="css/smoothness/jquery-ui-1.8.16.custom.css" />
 	</head>
 	<body>
-		<canvas id="canvas" width="500px" height="500px"></canvas>
+		<table>
+			<tr>
+				<td>
+					<input type="button" value="Clear" id="clear_btn"/>
+					<input type="button" value="WuLine" id="wu_line_btn"/>
+					<input type="button" value="DDALine" id="dda_line_btn"/>
+					<input type="button" value="BresenhamLine" id="bresenham_line_btn"/>
+					<input type="button" value="Circle" id="circle_btn"/>					
+					<input type="button" value="Ellipse" id="ellipse_btn"/>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div id="slider" style="width:400px;"></div>
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					<canvas id="canvas" width="100px" height="100px"></canvas>
+				</td>
+			</tr>
 
-		<!-- scripts -->
+		</table>
+		
 		<script type="text/javascript" src="js/jquery.js"></script>
 		<script type="text/javascript" src="js/jquery.color.min.js"></script>
+		<script type="text/javascript" src="js/jquery-ui.js"></script>
 		<script type="text/javascript" src="js/underscore.js"></script>
 		<script type="text/javascript" src="js/backbone.js"></script>
+
+		<script type="text/javascript" src="js/configs.js"></script>
+		<script type="text/javascript" src="js/UI/DrawStateHandler.js"></script>
+		<script type="text/javascript" src="js/Common/Controller.js"></script>
+		<script type="text/javascript" src="js/Common/Math.js"></script>
+		<script type="text/javascript" src="js/Models/Point.js"></script>
+		<script type="text/javascript" src="js/Models/CanvasConfig.js"></script>
+		<script type="text/javascript" src="js/Canvas/Canvas.js"></script>
+		<script type="text/javascript" src="js/Canvas/Context.js"></script>
+		<script type="text/javascript" src="js/Graphics/Line.js"></script>
+		<script type="text/javascript" src="js/Graphics/DDALine.js"></script>
+		<script type="text/javascript" src="js/Graphics/BresenhamLine.js"></script>
+		<script type="text/javascript" src="js/Graphics/WuLine.js"></script>
+		<script type="text/javascript" src="js/Graphics/Ellipse.js"></script>
+		<script type="text/javascript" src="js/Graphics/Circle.js"></script>
+
 		<script type="text/javascript" src="js/main.js"></script>
+		<br/><p><a href="#" id="about_link">About...</a></p>
+		<div id="dialog" title="About" style="display:hidden">
+			<p>
+				programming	Egor Mihnevich, Maxim Bozbey<br />
+			</p>
+			<p>
+				Copyright(c) 2011 Arrrr.
+			</p>
+		</div>
+		
+		<script>
+		$('#slider').slider({
+			range: false,
+			values:[43],
+			change: function (a,b) {
+				canvasConfig.set({pixelSize:Math.floor(b.value/100 * 20 + 0.5 + 3)});
+			}
+		});
+		
+		//$.fx.speeds._default = 1000;
+		$(function() {
+			$( "#dialog" ).dialog({
+				autoOpen: false,
+				show: "blind",
+				hide: "explode",
+				modal: true,
+				width: 450,
+				buttons: {
+					Ok: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+
+			});
+			//$( "#dialog" ).dialog( "open" );
+		});
+		
+		$('#about_link').click(function() {
+			$('#dialog').dialog('open');
+			return false;
+		});
+		
+		function about(){
+			$(function(){$( "#dialog" ).dialog("open");});
+			return false;
+		}
+		</script>
+		
+
 	</body>
 </html>

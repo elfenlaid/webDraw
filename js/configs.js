@@ -1,0 +1,2 @@
+var drawState = "";
+var drawVector = [];
