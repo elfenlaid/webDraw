@@ -29,6 +29,12 @@ var circle = new Circle({
 	color: "pink"
 });
 
+var p = new Parabola({
+    center: new Point({x: 50, y: 50}),
+    p: 60,
+    color: "black"
+});
+
 var controller = new Controller();
 Backbone.history.start(); 
 
@@ -42,3 +48,4 @@ canvas.redraw();
 //canvas.draw(ellipse);
 //canvas.draw(circle);
 
+canvas.draw(p);
