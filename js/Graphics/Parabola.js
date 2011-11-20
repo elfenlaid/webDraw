@@ -21,47 +21,62 @@ var Parabola = Backbone.View.extend({
 	},
 	
 	render: function() {
+		
+	
 		var x0 = this.center.get('x');
 		var y0 = this.center.get('y');
 		
+		if(this.p < 0) {
+			var limit = this.canvas.width;
+		} else {
+			var limit = 0;
+		}
+		
+		var p = Math.abs(this.p);
+		
 		var x = 0;
-        var y = y0;
+        var y = 0;
         
-        var p = new Point({
+		if(p != 0) {
+			var lim = - Math.abs(limit - x0);
+		} else {
+			var lim = 0;
+		}
+
+		if(p == 1) {
+			var delta = 0;
+		} else {
+			var delta = -1;
+		}
+		
+        var point = new Point({
         	x: x, 
         	y: y
         });
         
-        var delta = 1 + 2 * this.p;
-        var error = 0;
-        while(y >= 0) {
-        		p.set({x: x0 + x, y: y0 + y});
-        		this.canvas.drawPoint(p, this.color);
-        		
-             	p.set({x: x0 + x, y: y0 - y});
-                this.canvas.drawPoint(p, this.color);
-                
-                p.set({x: x0 - x, y: y0 + y});
-                this.canvas.drawPoint(p, this.color);
-                
-                p.set({x: x0 - x, y: y0 - y});
-                this.canvas.drawPoint(p, this.color);
- 
-                error = 2 * (delta - this.p + 2 * Math.sqr(y) + 1);
+        while(x >= lim) {
+
+				point.set({x: x0 + Math.sign(this.p) * x, y: y0 + y});
+				this.canvas.drawPoint(point, this.color);
+				point.set({x: x0 + Math.sign(this.p) * x, y: y0 - y});
+				this.canvas.drawPoint(point, this.color);
+				
+                var error = 2 * (delta - p + 2 * y + 1);
                 if(delta < 0 && error <= 0) {
-                        x++;
-                        delta += 2 * Math.sqr(y) + 1;
+                        y++;
+                        delta += 2 * y + 1;
                         continue;
                 }
-                error = 2 * (delta - 2 * this.p + Math.sqr(y)) + 1;
+				
+                var error = 2 * (delta - 2 * p + y) + 1;
                 if(delta > 0 && error > 0) {
-                        y--;
-                        delta += - 2 * this.p;
+                        x--;
+                        delta += - 2 * p;
                         continue;
                 }
-                x++;
-                delta += 2 * Math.sqr(y) + 1 - 2 * this.p;
-                y--;
+                x--;
+                y++;
+				delta += 2 * y - 2 * p + 1;
         }
 	}
 });

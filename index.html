@@ -13,6 +13,7 @@
 					<input type="button" value="BresenhamLine" id="bresenham_line_btn"/>
 					<input type="button" value="Circle" id="circle_btn"/>					
 					<input type="button" value="Ellipse" id="ellipse_btn"/>
+					<input type="button" value="Parabola" id="parabola_btn" />
 				</td>
 			</tr>
 			<tr>
@@ -28,6 +29,12 @@
 			</tr>
 
 		</table>
+		
+		
+		<div id="pDialog" title="Input P value" style="display:hidden">
+			<label for="name">P:</label>
+			<input type="number" name="name" id="pValue" class="number ui-widget-content ui-corner-all" value="1"/>
+		</div>
 		
 		<script type="text/javascript" src="js/jquery.js"></script>
 		<script type="text/javascript" src="js/jquery.color.min.js"></script>
@@ -99,6 +106,7 @@
 			$(function(){$( "#dialog" ).dialog("open");});
 			return false;
 		}
+		
 		</script>
 		
 

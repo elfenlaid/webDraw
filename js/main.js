@@ -29,9 +29,15 @@ var circle = new Circle({
 	color: "pink"
 });
 
-var p = new Parabola({
-    center: new Point({x: 50, y: 50}),
-    p: 60,
+var p1 = new Parabola({
+    center: new Point({x: 90, y: 50}),
+    p: 6,
+    color: "black"
+});
+
+var p2 = new Parabola({
+    center: new Point({x: 3, y: 50}),
+    p: -10,
     color: "black"
 });
 
@@ -48,4 +54,5 @@ canvas.redraw();
 //canvas.draw(ellipse);
 //canvas.draw(circle);
 
-canvas.draw(p);
+//canvas.draw(p1);
+//canvas.draw(p2);

@@ -24,6 +24,10 @@ $('#clear_btn').click(function() {
     canvas.redraw();
 });
 
+$('#parabola_btn').click(function() {
+	drawState = "ParabolaDraw";
+});
+
 function WuLineDraw () {
     if (drawVector.length < 2) return;
     
@@ -87,4 +91,29 @@ function EllipseDraw () {
     
     canvas.draw(ellipse);
     drawVector = [];
+}
+
+function ParabolaDraw() {
+	if(drawVector.length != 1) return;
+	var c = drawVector[0];
+		
+		$('#pDialog').dialog({
+			modal: true,
+			autoOpen: true,
+			show: "blind",
+			buttons: {
+				"Ok" : function() {
+					var p = $('#pValue').val();
+					
+					var parabola = new Parabola({
+						center: c,
+						p: p
+					});
+					canvas.draw(parabola);
+					
+					$('#pDialog').dialog('close');
+				}
+			}
+		});
+	drawVector = [];
 }
