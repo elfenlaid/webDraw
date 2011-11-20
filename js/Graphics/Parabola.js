@@ -25,14 +25,14 @@ var Parabola = Backbone.View.extend({
 		var y0 = this.center.get('y');
 		
 		var x = 0;
-        var y = this.b;
+        var y = y0;
         
         var p = new Point({
         	x: x, 
         	y: y
         });
         
-        var delta = Math.sqr(this.a) + Math.sqr(this.b) - 2 * Math.sqr(this.a) * this.b;
+        var delta = 1 + 2 * this.p;
         var error = 0;
         while(y >= 0) {
         		p.set({x: x0 + x, y: y0 + y});
@@ -47,20 +47,20 @@ var Parabola = Backbone.View.extend({
                 p.set({x: x0 - x, y: y0 - y});
                 this.canvas.drawPoint(p, this.color);
  
-                var error = 2 * (delta + Math.sqr(this.a) * y) - Math.sqr(this.a);
+                error = 2 * (delta - this.p + 2 * Math.sqr(y) + 1);
                 if(delta < 0 && error <= 0) {
                         x++;
-                        delta += Math.sqr(this.b) * (2 * x + 1);
+                        delta += 2 * Math.sqr(y) + 1;
                         continue;
                 }
-                error = 2 * (delta + Math.sqr(this.b) * x) - Math.sqr(this.b);
+                error = 2 * (delta - 2 * this.p + Math.sqr(y)) + 1;
                 if(delta > 0 && error > 0) {
                         y--;
-                        delta += Math.sqr(this.a) * (1 - 2 * y);
+                        delta += - 2 * this.p;
                         continue;
                 }
                 x++;
-                delta += Math.sqr(this.b) * (2 * x + 1) + Math.sqr(this.a) * (1 - 2 * y);
+                delta += 2 * Math.sqr(y) + 1 - 2 * this.p;
                 y--;
         }
 	}
