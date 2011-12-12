@@ -28,6 +28,19 @@ $('#parabola_btn').click(function() {
 	drawState = "ParabolaDraw";
 });
 
+var isVoronoiInit = false;
+
+$('#voronoi_btn').click(function() {
+	Voronoi.canvas = canvas.getHtmlCanvas();
+	Voronoi.setCanvasSize(canvas.width * canvas.pixelSize, canvas.height * canvas.pixelSize);
+	if(!isVoronoiInit) {
+		Voronoi.init();
+		isVoronoiInit = true;
+	}
+	Voronoi.clearSites();
+	Voronoi.generateSites(100);
+});
+
 function WuLineDraw () {
     if (drawVector.length < 2) return;
     
