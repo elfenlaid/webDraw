@@ -41,6 +41,10 @@ $('#voronoi_btn').click(function() {
 	Voronoi.generateSites(100);
 });
 
+$('#cohen_sutherland_btn').click(function() {
+	drawState = "CohenSutherlandDraw";
+});
+
 function WuLineDraw () {
     if (drawVector.length < 2) return;
     
@@ -129,4 +133,34 @@ function ParabolaDraw() {
 			}
 		});
 	drawVector = [];
+}
+
+function CohenSutherlandDraw() {
+	if(drawVector.length < 2) return;
+	if(drawVector.length == 2) {
+			var rect = new Rect({
+			topLeft: drawVector[0],
+			bottomRight: drawVector[1],
+			color: 'black'
+		});
+		canvas.draw(rect);
+		
+		CohenSutherland.initClipRect(
+			drawVector[0].get('x'), 
+			drawVector[1].get('x'), 
+			drawVector[0].get('y'), 
+			drawVector[1].get('y')
+		);
+	}
+	if(drawVector.length == 3) return;
+	if(drawVector.length == 4) {
+		CohenSutherland.CohenSutherlandLineClipAndDraw(
+			drawVector[2].get('x'),
+			drawVector[2].get('y'),
+			drawVector[3].get('x'),
+			drawVector[3].get('y')
+		);
+		drawVector = [];
+	}
+	
 }
