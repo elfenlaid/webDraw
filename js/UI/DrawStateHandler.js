@@ -28,6 +28,23 @@ $('#parabola_btn').click(function() {
 	drawState = "ParabolaDraw";
 });
 
+var isVoronoiInit = false;
+
+$('#voronoi_btn').click(function() {
+	Voronoi.canvas = canvas.getHtmlCanvas();
+	Voronoi.setCanvasSize(canvas.width * canvas.pixelSize, canvas.height * canvas.pixelSize);
+	if(!isVoronoiInit) {
+		Voronoi.init();
+		isVoronoiInit = true;
+	}
+	Voronoi.clearSites();
+	Voronoi.generateSites(100);
+});
+
+$('#cohen_sutherland_btn').click(function() {
+	drawState = "CohenSutherlandDraw";
+});
+
 $('#bezier_btn').click(function() {
 	drawState = "BezierDraw";
 });
@@ -135,4 +152,34 @@ function ParabolaDraw() {
 			}
 		});
 	drawVector = [];
+}
+
+function CohenSutherlandDraw() {
+	if(drawVector.length < 2) return;
+	if(drawVector.length == 2) {
+			var rect = new Rect({
+			topLeft: drawVector[0],
+			bottomRight: drawVector[1],
+			color: 'black'
+		});
+		canvas.draw(rect);
+		
+		CohenSutherland.initClipRect(
+			drawVector[0].get('x'), 
+			drawVector[1].get('x'), 
+			drawVector[0].get('y'), 
+			drawVector[1].get('y')
+		);
+	}
+	if(drawVector.length == 3) return;
+	if(drawVector.length == 4) {
+		CohenSutherland.CohenSutherlandLineClipAndDraw(
+			drawVector[2].get('x'),
+			drawVector[2].get('y'),
+			drawVector[3].get('x'),
+			drawVector[3].get('y')
+		);
+		drawVector = [];
+	}
+	
 }

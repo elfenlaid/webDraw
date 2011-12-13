@@ -48,6 +48,7 @@ var canvasConfig = new CanvasConfig({pixelSize: 10});
 var canvas = new Canvas({model: canvasConfig});
 canvas.redraw();
 
+
 // canvas.draw(line);
 // canvas.draw(line2);
 // canvas.draw(line3);

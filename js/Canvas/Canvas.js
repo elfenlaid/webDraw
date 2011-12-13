@@ -99,6 +99,10 @@ var Canvas = Backbone.View.extend({
 		this.redraw();
 	},
 	
+	getHtmlCanvas : function() {
+		return this.el[0];
+	},
+	
 });
 
 
