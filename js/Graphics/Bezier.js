@@ -1,6 +1,5 @@
 
-
-var Line = Backbone.View.extend({
+var BezierLine = Backbone.View.extend({
 	initialize: function(args) {
 		if(args.pointStart){
 			this.pointStart = args.pointStart;
@@ -30,23 +29,48 @@ var Line = Backbone.View.extend({
 			this.color = $.Color('#000000');
 		}
 		this.canvas = null;
+		
+		this.pVectorX = $V([this.pointStart.get("x"), this.p1.get("x"), 
+		                   this.p2.get("x"), this.pointEnd.get("x")]);
+		this.pVectorY = $V([this.pointStart.get("x"), this.p1.get("x"), 	
+	                       this.p2.get("x"), this.pointEnd.get("x")]);
+		
+		this.bezierMatrix = $M(
+			 [[-1, 3, -3, 1],
+			 [3, -6, 3, 0],
+			 [-3, 3, 0, 0],
+			 [1, 0, 0, 0]]);
+			
 	},
 	
 	render: function() {
-	    for ()
-	},
-	
-	Bezier4: function(p1, p2, p3, p4, mu) {
-        var mum1, mum13, mu3;
-        var p = new Point();
-
-        mum1 = 1 - mu;
-        mum13 = mum1 * mum1 * mum1;
-        mu3 = mu * mu * mu;
-
-        p.set({x: mum13*p1.get('x') + 3*mu*mum1*mum1*p2.get('x') + 3*mu*mu*mum1*p3.get('x') + mu3*p4.get('x') });
-        p.set({y: mum13*p1.get('y') + 3*mu*mum1*mum1*p2.get('y') + 3*mu*mu*mum1*p3.get('y') + mu3*p4.get('y') });
-
-        return p;
-    }
+		var t = 0;
+		while(t < 1) {
+			var tVector = $M([[Math.pow(t, 3), Math.pow(t,2), t, 1],
+							[0,0,0,0],
+							[0,0,0,0],
+							[0,0,0,0]      
+			                 ]);
+			var x1 = tVector.multiply(this.bezierMatrix).multiply(this.pVectorX).e(1);
+			var y1 = tVector.multiply(this.bezierMatrix).multiply(this.pVectorY).e(1);
+			
+			t += 0.1;
+			
+			tVector = $M([[Math.pow(t, 3), Math.pow(t,2), t, 1],
+							[0,0,0,0],
+							[0,0,0,0],
+							[0,0,0,0]      
+			                 ]);
+			var x2 = tVector.multiply(this.bezierMatrix).multiply(this.pVectorX).e(1);
+			var y2 = tVector.multiply(this.bezierMatrix).multiply(this.pVectorY).e(1);
+			
+			var wuLine = new DDALine({
+		    	pointStart: new Point({x:x1, y:y1}),
+		    	pointEnd:   new Point({x:x2, y:y2}),
+		    	color: 'red'
+		        });
+		
+		    canvas.draw(wuLine);
+		}
+	}
 });

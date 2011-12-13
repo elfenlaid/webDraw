@@ -28,6 +28,10 @@ $('#parabola_btn').click(function() {
 	drawState = "ParabolaDraw";
 });
 
+$('#bezier_btn').click(function() {
+	drawState = "BezierDraw";
+});
+
 function WuLineDraw () {
     if (drawVector.length < 2) return;
     
@@ -64,6 +68,21 @@ function BresenhamLineDraw () {
     });
     
     canvas.draw(wuLine);
+    drawVector = [];
+};
+
+function BezierDraw () {
+    if (drawVector.length < 4) return;
+    
+    var bezier = new BezierLine({
+    	pointStart: drawVector[0],
+    	pointEnd:	drawVector[1],
+		p1:         drawVector[2],
+		p2:         drawVector[3],
+    	color: 'red'
+    });
+    
+    canvas.draw(bezier);
     drawVector = [];
 };
 
