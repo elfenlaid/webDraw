@@ -32,8 +32,8 @@ var BezierLine = Backbone.View.extend({
 		
 		this.pVectorX = $V([this.pointStart.get("x"), this.p1.get("x"), 
 		                   this.p2.get("x"), this.pointEnd.get("x")]);
-		this.pVectorY = $V([this.pointStart.get("x"), this.p1.get("x"), 	
-	                       this.p2.get("x"), this.pointEnd.get("x")]);
+		this.pVectorY = $V([this.pointStart.get("y"), this.p1.get("y"), 	
+	                       this.p2.get("y"), this.pointEnd.get("y")]);
 		
 		this.bezierMatrix = $M(
 			 [[-1, 3, -3, 1],
@@ -64,13 +64,16 @@ var BezierLine = Backbone.View.extend({
 			var x2 = tVector.multiply(this.bezierMatrix).multiply(this.pVectorX).e(1);
 			var y2 = tVector.multiply(this.bezierMatrix).multiply(this.pVectorY).e(1);
 			
-			var wuLine = new DDALine({
-		    	pointStart: new Point({x:x1, y:y1}),
-		    	pointEnd:   new Point({x:x2, y:y2}),
+			var wuLine = new BresenhamLine({
+		    	pointStart: new Point({x: Math.round(x1), y: Math.round(y1)}),
+		    	pointEnd:   new Point({x: Math.round(x2), y: Math.round(y2)}),
 		    	color: 'red'
 		        });
 		
-		    canvas.draw(wuLine);
+		    this.canvas.draw(wuLine);
 		}
 	}
 });
+
+
+
