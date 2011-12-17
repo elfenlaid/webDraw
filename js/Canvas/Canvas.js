@@ -1,6 +1,8 @@
 var Canvas = Backbone.View.extend({
 	el: $("#canvas"),
 	_figures: [],
+	_history: [],
+	
 	events: {
 		'click' : 'click'
 	},
@@ -17,6 +19,30 @@ var Canvas = Backbone.View.extend({
 		this.model.bind('change:pixelSize', this.changePixelSize);
 		this.clear();
 		this.grid();
+		
+		_.bindAll(this, 'on_keypress');
+		$(document).bind('keypress', this.on_keypress);
+	},
+	
+	on_keypress : function(e) {
+		console.log(e.keyCode);
+		if(e.keyCode == 26) { //Ctrl + Z
+			
+		} 
+		switch(e.keyCode) {
+		case 26: //Ctrl + Z
+			if(this._figures.length > 0) {
+				this._history.push(this._figures.pop());
+				this.redraw();
+			}
+			break;
+		case 25: //Ctrl + Y
+			if(this._history.length > 0) {
+				this._figures.push(this._history.pop());
+				this.redraw();
+			}
+			break;
+		}
 	},
 	
 	grid : function() {
