@@ -19,12 +19,55 @@
 					<input type="button" value="Ermite" id="bezier_btn" />
 					<input type="button" value="Voronoi" id="voronoi_btn" />
 					<input type="button" value="Cohen-Sutherland" id="cohen_sutherland_btn" />
+					<input type="button" value="Tranformations" id="tranformations_btn" />
 				</td>
 			</tr>
+			
 			<tr>
 				<td>
 					<div id="slider" style="width:400px;"></div>
 				</td>
+				<td>
+					<label>Scale</label>
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					<div id="sliderX" style="width:400px;"></div>
+				</td>
+				<td>
+					<label>RotateX</label>
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					<div id="sliderY" style="width:400px;"></div>
+				</td>
+				<td>
+					<label>RotateY</label>
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					<div id="sliderZ" style="width:400px;"></div>
+				</td>
+				<td>
+					<label>RotateZ</label>
+				</td>
+				
+			</tr>
+			
+			<tr>
+				<td>
+					<div id="sliderP" style="width:400px;"></div>
+				</td>
+				<td>
+					<label>Projection</label>
+				</td>
+				
 			</tr>
 			
 			<tr>
@@ -67,6 +110,8 @@
 		<script type="text/javascript" src="js/Graphics/Rect.js"></script>
 		<script type="text/javascript" src="js/Graphics/Voronoi.js"></script>
 		<script type="text/javascript" src="js/Graphics/CohenSutherland.js"></script>
+		<script type="text/javascript" src="js/Graphics/Cube.js"></script>
+		
 
 
 		<script type="text/javascript" src="js/main.js"></script>
@@ -84,6 +129,38 @@
 		$('#slider').slider({
 			range: false,
 			values:[43],
+			change: function (a,b) {
+				canvasConfig.set({pixelSize:Math.floor(b.value/100 * 20 + 0.5 + 3)});
+			}
+		});
+		
+		$('#sliderX').slider({
+			range: false,
+			values:[0],
+			change: function (a,b) {
+				canvasConfig.set({pixelSize:Math.floor(b.value/100 * 20 + 0.5 + 3)});
+			}
+		});
+		
+		$('#sliderY').slider({
+			range: false,
+			values:[0],
+			change: function (a,b) {
+				canvasConfig.set({pixelSize:Math.floor(b.value/100 * 20 + 0.5 + 3)});
+			}
+		});
+		
+		$('#sliderZ').slider({
+			range: false,
+			values:[0],
+			change: function (a,b) {
+				canvasConfig.set({pixelSize:Math.floor(b.value/100 * 20 + 0.5 + 3)});
+			}
+		});
+		
+		$('#sliderP').slider({
+			range: false,
+			values:[0],
 			change: function (a,b) {
 				canvasConfig.set({pixelSize:Math.floor(b.value/100 * 20 + 0.5 + 3)});
 			}

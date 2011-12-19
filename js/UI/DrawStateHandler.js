@@ -28,6 +28,11 @@ $('#parabola_btn').click(function() {
 	drawState = "ParabolaDraw";
 });
 
+$('#tranformations_btn').click(function() {
+	drawState = "CubeDraw";
+});
+
+
 var isVoronoiInit = false;
 
 $('#voronoi_btn').click(function() {
@@ -182,4 +187,16 @@ function CohenSutherlandDraw() {
 		drawVector = [];
 	}
 	
+}
+
+function CubeDraw() {
+	if (drawVector.lenght < 1) return;
+	
+	var cube = new Cube({
+    	topLeft: drawVector[0],
+    	color: 'yellow'
+    });
+
+    canvas.draw(cube);
+    drawVector = [];
 }
