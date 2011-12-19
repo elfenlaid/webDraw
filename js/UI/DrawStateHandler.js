@@ -192,11 +192,7 @@ function CohenSutherlandDraw() {
 function CubeDraw() {
 	if (drawVector.lenght < 1) return;
 	
-	var cube = new Cube({
-    	topLeft: drawVector[0],
-    	color: 'yellow'
-    });
-
+	cube.sampleVertecies(drawVector[0]);
     canvas.draw(cube);
     drawVector = [];
 }

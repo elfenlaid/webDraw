@@ -46,6 +46,7 @@ Backbone.history.start();
 
 var canvasConfig = new CanvasConfig({pixelSize: 10});
 var canvas = new Canvas({model: canvasConfig});
+var cube = new Cube();
 canvas.redraw();
 
 

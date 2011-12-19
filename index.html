@@ -138,7 +138,7 @@
 			range: false,
 			values:[0],
 			change: function (a,b) {
-				canvasConfig.set({pixelSize:Math.floor(b.value/100 * 20 + 0.5 + 3)});
+				cube.setAngleX(b.value % 360);
 			}
 		});
 		
@@ -146,7 +146,7 @@
 			range: false,
 			values:[0],
 			change: function (a,b) {
-				canvasConfig.set({pixelSize:Math.floor(b.value/100 * 20 + 0.5 + 3)});
+				cube.setAngleY(b.value % 360);
 			}
 		});
 		
@@ -154,7 +154,7 @@
 			range: false,
 			values:[0],
 			change: function (a,b) {
-				canvasConfig.set({pixelSize:Math.floor(b.value/100 * 20 + 0.5 + 3)});
+				cube.setAngleZ(b.value % 360);
 			}
 		});
 		

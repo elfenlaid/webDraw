@@ -1,19 +1,17 @@
 var Cube = Backbone.View.extend({
-	initialize: function(args) {
-		if(args.topLeft){
-			this.topLeft = args.topLeft;
-		} else {
-			this.topLeft = new Point({x:10, y:10});
-		}
+	
+	initialize: function() {
+
+		this.topLeft = new Point({x:50, y:50});
 		
-		if(args.color) {
-			var tmp = $.Color(args.color).toRGB();
-			this.color = $.Color([tmp.red(), tmp.green(), tmp.blue(), 1]);
-		} else {
-			this.color = $.Color('#000000');
-		}
 		this.canvas = null;
-		
+			
+		var scale = 1;
+		this.scaleMatrix = $M ([
+			[scale, 0, 0],
+			[0, 0, scale]]);
+			
+		this.offset = $V([0, 0]);
 		var cubeSize = 40;
 		this.vertices = [
 			$V([this.topLeft.get('x'), this.topLeft.get('y'), 0]),
@@ -27,28 +25,21 @@ var Cube = Backbone.View.extend({
 			$V([this.topLeft.get('x') + cubeSize, this.topLeft.get('y'), cubeSize])
 			];
 			
-		var scale = 1;
-		this.scaleMatrix = $M ([
-			[scale, 0, 0],
-			[0, 0, scale]]);
-			
-		this.offset = $V([0, 0]);
-			
-		var angle = (40 * 3.14 / 180);
-		var zRotate = $M([
+		var angle = 0;
+		this.zRotate = $M([
 			[Math.cos(angle), -Math.sin(angle), 0], 
 			[Math.sin(angle), Math.cos(angle), 0], 
 			[0, 0, 1]]);			
-		var xRotate = $M([
+		this.xRotate = $M([
 			[1, 0, 0],
 			[0, Math.cos(angle), -Math.sin(angle)], 
 			[0, Math.sin(angle), Math.cos(angle)]]);
-		var yRotate = $M([
+		this.yRotate = $M([
 			[Math.cos(angle), 0, Math.sin(angle)], 
 			[0, 1, 0], 
 			[-Math.sin(angle), 0, Math.cos(angle)]]);
 			
-		this.rotationMatrix = xRotate.multiply(yRotate.multiply(zRotate));
+		this.rotationMatrix = this.xRotate.multiply(this.yRotate.multiply(this.zRotate));
 	},
 	
 	render: function() {
@@ -84,5 +75,65 @@ var Cube = Backbone.View.extend({
 		
 		    this.canvas.draw(wuLine);
 		}
-	}
+	},
+	
+	sampleVertecies: function (p) {
+		this.topLeft = p;
+		
+		var cubeSize = 40;
+		this.vertices = [
+			$V([this.topLeft.get('x'), this.topLeft.get('y'), 0]),
+			$V([this.topLeft.get('x'), this.topLeft.get('y') + cubeSize, 0]), 
+			$V([this.topLeft.get('x') + cubeSize, this.topLeft.get('y') + cubeSize, 0]),
+			$V([this.topLeft.get('x') + cubeSize, this.topLeft.get('y'), 0]), 
+			
+			$V([this.topLeft.get('x'), this.topLeft.get('y'), cubeSize]),
+			$V([this.topLeft.get('x'), this.topLeft.get('y') + cubeSize, cubeSize]), 
+			$V([this.topLeft.get('x') + cubeSize, this.topLeft.get('y') + cubeSize, cubeSize]),
+			$V([this.topLeft.get('x') + cubeSize, this.topLeft.get('y'), cubeSize])
+			];
+		canvas.wipeClear();
+		canvas.redraw();
+		    
+		canvas.draw(cube);
+	},
+	
+	setAngleZ: function(angle) {
+		angle = (angle * 3.14 / 180);
+		this.zRotate = $M([
+			[Math.cos(angle), -Math.sin(angle), 0], 
+			[Math.sin(angle), Math.cos(angle), 0], 
+			[0, 0, 1]]);
+			
+		this.rotationMatrix = this.xRotate.multiply(this.yRotate.multiply(this.zRotate));
+		canvas.wipeClear();
+	    canvas.redraw();
+		canvas.draw(cube);
+	},
+	
+	setAngleX: function(angle) {
+		angle = (angle * 3.14 / 180);
+		this.xRotate = $M([
+			[1, 0, 0],
+			[0, Math.cos(angle), -Math.sin(angle)], 
+			[0, Math.sin(angle), Math.cos(angle)]]);
+		this.rotationMatrix = this.xRotate.multiply(this.yRotate.multiply(this.zRotate));
+
+		canvas.wipeClear();
+	    canvas.redraw();
+		canvas.draw(cube);
+	},
+	
+	setAngleY: function(angle) {
+		angle = (angle * 3.14 / 180);
+		this.yRotate = $M([
+			[Math.cos(angle), 0, Math.sin(angle)], 
+			[0, 1, 0], 
+			[-Math.sin(angle), 0, Math.cos(angle)]]);
+			
+		this.rotationMatrix = this.xRotate.multiply(this.yRotate.multiply(this.zRotate));
+		canvas.wipeClear();
+	    canvas.redraw();
+		canvas.draw(cube);
+	},
 });
