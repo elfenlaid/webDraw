@@ -62,7 +62,7 @@
 			
 			<tr>
 				<td>
-					<div id="sliderP" style="width:400px;"></div>
+					<div id="sliderD" style="width:400px;"></div>
 				</td>
 				<td>
 					<label>Projection</label>
@@ -158,11 +158,11 @@
 			}
 		});
 		
-		$('#sliderP').slider({
+		$('#sliderD').slider({
 			range: false,
 			values:[0],
 			change: function (a,b) {
-				canvasConfig.set({pixelSize:Math.floor(b.value/100 * 20 + 0.5 + 3)});
+				cube.setD(b);
 			}
 		});
 		

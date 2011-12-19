@@ -14,10 +14,10 @@ var Cube = Backbone.View.extend({
 		this.offset = $V([0, 0]);
 		var cubeSize = 40;
 		this.vertices = [
-			$V([this.topLeft.get('x'), this.topLeft.get('y'), 0]),
-			$V([this.topLeft.get('x'), this.topLeft.get('y') + cubeSize, 0]), 
-			$V([this.topLeft.get('x') + cubeSize, this.topLeft.get('y') + cubeSize, 0]),
-			$V([this.topLeft.get('x') + cubeSize, this.topLeft.get('y'), 0]), 
+			$V([this.topLeft.get('x'), this.topLeft.get('y'), 1]),
+			$V([this.topLeft.get('x'), this.topLeft.get('y') + cubeSize, 1]), 
+			$V([this.topLeft.get('x') + cubeSize, this.topLeft.get('y') + cubeSize, 1]),
+			$V([this.topLeft.get('x') + cubeSize, this.topLeft.get('y'), 1]), 
 			
 			$V([this.topLeft.get('x'), this.topLeft.get('y'), cubeSize]),
 			$V([this.topLeft.get('x'), this.topLeft.get('y') + cubeSize, cubeSize]), 
@@ -26,6 +26,7 @@ var Cube = Backbone.View.extend({
 			];
 			
 		var angle = 0;
+		this.d = 20;
 		this.zRotate = $M([
 			[Math.cos(angle), -Math.sin(angle), 0], 
 			[Math.sin(angle), Math.cos(angle), 0], 
@@ -46,12 +47,13 @@ var Cube = Backbone.View.extend({
 		var start;
 		var end;
 		for (i = 0; i < this.vertices.length; i++) {
-			start = this.offset.add(this.scaleMatrix.multiply(this.rotationMatrix.multiply(this.vertices[i])));
+
+			start = this.offset.add(this.scaleMatrix.multiply(this.rotationMatrix.multiply(this.project(this.vertices[i]))));
 			
 			if (i == 3 || i == 7) {
-				end = this.offset.add(this.scaleMatrix.multiply(this.rotationMatrix.multiply(this.vertices[i-3])));
+				end = this.offset.add(this.scaleMatrix.multiply(this.rotationMatrix.multiply(this.project(this.vertices[i-3]))));
 			} else {
-				end = this.offset.add(this.scaleMatrix.multiply(this.rotationMatrix.multiply(this.vertices[i+1])));
+				end = this.offset.add(this.scaleMatrix.multiply(this.rotationMatrix.multiply(this.project(this.vertices[i+1]))));
 			}
 			
 			var wuLine = new BresenhamLine({
@@ -64,8 +66,8 @@ var Cube = Backbone.View.extend({
 		}
 		
 		for (i = 0; i < 4; i++) {
-			start = this.offset.add(this.scaleMatrix.multiply(this.rotationMatrix.multiply(this.vertices[i])));
-			end = this.offset.add(this.scaleMatrix.multiply(this.rotationMatrix.multiply(this.vertices[i+4])));
+			start = this.offset.add(this.scaleMatrix.multiply(this.rotationMatrix.multiply(this.project(this.vertices[i]))));
+			end = this.offset.add(this.scaleMatrix.multiply(this.rotationMatrix.multiply(this.project(this.vertices[i+4]))));
 			
 			var wuLine = new BresenhamLine({
 		    	pointStart: new Point({x: Math.round(start.e(1)), y: Math.round(start.e(2))}),
@@ -77,15 +79,25 @@ var Cube = Backbone.View.extend({
 		}
 	},
 	
+	project: function(v) {
+		if (v.e(3) == 0) var z = 1;
+		else z = v.e(3);
+		
+		var delta = z / this.d;
+
+		//return $V([v.e(1) / delta, v.e(2) / delta, this.d]);
+		return v;
+	}, 
+	
 	sampleVertecies: function (p) {
 		this.topLeft = p;
 		
 		var cubeSize = 40;
 		this.vertices = [
-			$V([this.topLeft.get('x'), this.topLeft.get('y'), 0]),
-			$V([this.topLeft.get('x'), this.topLeft.get('y') + cubeSize, 0]), 
-			$V([this.topLeft.get('x') + cubeSize, this.topLeft.get('y') + cubeSize, 0]),
-			$V([this.topLeft.get('x') + cubeSize, this.topLeft.get('y'), 0]), 
+			$V([this.topLeft.get('x'), this.topLeft.get('y'), 1]),
+			$V([this.topLeft.get('x'), this.topLeft.get('y') + cubeSize, 1]), 
+			$V([this.topLeft.get('x') + cubeSize, this.topLeft.get('y') + cubeSize, 1]),
+			$V([this.topLeft.get('x') + cubeSize, this.topLeft.get('y'), 1]), 
 			
 			$V([this.topLeft.get('x'), this.topLeft.get('y'), cubeSize]),
 			$V([this.topLeft.get('x'), this.topLeft.get('y') + cubeSize, cubeSize]), 
@@ -132,6 +144,14 @@ var Cube = Backbone.View.extend({
 			[-Math.sin(angle), 0, Math.cos(angle)]]);
 			
 		this.rotationMatrix = this.xRotate.multiply(this.yRotate.multiply(this.zRotate));
+		canvas.wipeClear();
+	    canvas.redraw();
+		canvas.draw(cube);
+	},
+	
+	setD: function(d) {
+		this.d = d;
+		
 		canvas.wipeClear();
 	    canvas.redraw();
 		canvas.draw(cube);
